@@ -18,6 +18,11 @@ class CountdownManager {
             // Add weekend countdown
             this.countdowns.push(WeekendCalculator.createWeekendEvent());
             
+            // Filter out disabled countdowns
+            this.countdowns = this.countdowns.filter(countdown => 
+                countdown.enabled === undefined || countdown.enabled === true
+            );
+            
             // Create countdown cards
             this.createCountdownCards();
             
@@ -62,6 +67,14 @@ class CountdownManager {
     }
 
     setMainCountdown(countdownId) {
+        // Check if the requested countdown exists and is enabled
+        const countdown = this.countdowns.find(c => c.id === countdownId);
+        if (!countdown) {
+            // If requested countdown doesn't exist, default to the first enabled one
+            countdownId = this.countdowns.length > 0 ? this.countdowns[0].id : null;
+            if (!countdownId) return; // No countdowns available
+        }
+        
         // Remove main-countdown class from all cards
         const allCards = document.querySelectorAll('.countdown-card');
         allCards.forEach(card => {

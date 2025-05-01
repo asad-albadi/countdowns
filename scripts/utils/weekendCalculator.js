@@ -60,7 +60,8 @@ class WeekendCalculator {
             targetDate: targetDate.toISOString(),
             since_text: isWeekendOngoing ? 'Weekend has been going on for:' : '',
             until_text: isWeekendOngoing ? 'Time until weekend ends:' : 'Time until weekend:',
-            final_date_text: isWeekendOngoing ? 'Weekend ends on:' : 'Weekend starts on:'
+            final_date_text: isWeekendOngoing ? 'Weekend ends on:' : 'Weekend starts on:',
+            enabled: true
         };
     }
 } 
