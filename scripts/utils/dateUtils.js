@@ -33,6 +33,31 @@ class DateUtils {
         return `${day}, ${month} ${dateNum}, ${year} ${hours}:${minutes}:${seconds}`;
     }
 
+    static formatLongDate(date) {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        const dayOfWeek = days[date.getDay()];
+        const dayOfMonth = date.getDate();
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        
+        // Add ordinal suffix to the day
+        const ordinalSuffix = this.getOrdinalSuffix(dayOfMonth);
+        
+        return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${month} ${year}`;
+    }
+    
+    static getOrdinalSuffix(day) {
+        if (day > 3 && day < 21) return 'th';
+        switch (day % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+
     static formatCountdownTime(timeObj) {
         const prefix = timeObj.isNegative ? '-' : '';
         return `${prefix}${timeObj.days}:${timeObj.hours}:${timeObj.minutes}:${timeObj.seconds}`;

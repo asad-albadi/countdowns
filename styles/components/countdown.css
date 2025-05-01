@@ -57,6 +57,9 @@
     font-size: 0.8em;
     text-align: center;
     opacity: 0.7;
+    line-height: 1.2;
+    margin-top: 0.3rem;
+    white-space: normal;
 }
 
 /* Animation for time updates */

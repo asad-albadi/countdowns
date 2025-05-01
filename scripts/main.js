@@ -89,7 +89,7 @@ class CountdownManager {
                 
                 // Update date
                 const dateElement = document.querySelector(`.countdown-date[data-id="${countdown.id}"]`);
-                dateElement.textContent = `${countdown.final_date_text} ${targetDate.toLocaleDateString()}`;
+                dateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
                 
                 // Add animation class
                 timeElement.classList.add('updating');
