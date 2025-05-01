@@ -1,0 +1,49 @@
+.countdown-card {
+    background-color: var(--card-background);
+    border: 2px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.countdown-card:hover {
+    transform: translateY(-5px);
+}
+
+.countdown-title {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.countdown-time {
+    font-size: 1.5em;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.countdown-label {
+    font-size: 0.9em;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.countdown-date {
+    font-size: 0.8em;
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* Animation for time updates */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.countdown-time.updating {
+    animation: pulse 0.5s ease;
+} 

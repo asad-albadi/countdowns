@@ -1,0 +1,102 @@
+/* Font declarations */
+@font-face {
+    font-family: 'Digital-7';
+    src: url('../assets/fonts/digital-7/digital-7.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Digital-7';
+    src: url('../assets/fonts/digital-7/digital-7 (italic).ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Digital-7 Mono';
+    src: url('../assets/fonts/digital-7/digital-7 (mono).ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Digital-7 Mono';
+    src: url('../assets/fonts/digital-7/digital-7 (mono italic).ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+:root {
+    --background-color: #000000;
+    --text-color: #ffffff;
+    --card-background: #1a1a1a;
+    --card-border: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Digital-7 Mono', 'Digital-7', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.current-time {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: clamp(16px, 4vw, 60px);
+}
+
+.countdowns-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Responsive font sizes */
+@media screen and (min-width: 3840px) { /* 4K */
+    .countdown-card {
+        font-size: 60px;
+    }
+}
+
+@media screen and (min-width: 2560px) and (max-width: 3839px) { /* 2K */
+    .countdown-card {
+        font-size: 28px;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 2559px) { /* Laptop */
+    .countdown-card {
+        font-size: 24px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) { /* Tablet */
+    .countdown-card {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) { /* Phone */
+    .countdown-card {
+        font-size: 16px;
+    }
+} 

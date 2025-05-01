@@ -1,0 +1,18 @@
+[
+        {
+            "id": 1,
+            "title": "Kshitij Final Day",
+            "targetDate": "2024-09-26T18:00:00",
+            "since_text": "Since Kshitij Left:",
+            "until_text": "Kshitij Final Day At VFOM:",
+            "final_date_text": "Final Day Date"
+        },
+        {
+            "id": 2,
+            "title": "Saira Wedding",
+            "targetDate": "2024-10-18T18:00:00",
+            "since_text": "Since Saira's Wedding:",
+            "until_text": "Saira Wedding Starts In:",
+            "final_date_text": "Wedding Date"
+        }
+] 
