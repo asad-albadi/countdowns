@@ -45,7 +45,13 @@ class DateUtils {
         // Add ordinal suffix to the day
         const ordinalSuffix = this.getOrdinalSuffix(dayOfMonth);
         
-        return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${month} ${year}`;
+        // Format time
+        const hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = (hours % 12 || 12).toString(); // Convert 24h to 12h format
+        
+        return `${dayOfWeek}, ${dayOfMonth}${ordinalSuffix}, ${month} ${year} at ${formattedHours}:${minutes} ${ampm}`;
     }
     
     static getOrdinalSuffix(day) {

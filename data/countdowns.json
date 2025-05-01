@@ -14,5 +14,13 @@
             "since_text": "Since Saira's Wedding:",
             "until_text": "Saira Wedding Starts In:",
             "final_date_text": "Wedding Date"
+        },
+        {
+            "id": 3,
+            "title": "Eid Ul Adha",
+            "targetDate": "2025-06-06T00:00:00",
+            "since_text": "Since Eid Ul Adha:",
+            "until_text": "Eid Ul Adha Starts In:",
+            "final_date_text": "Eid Ul Adha Date"
         }
 ] 
