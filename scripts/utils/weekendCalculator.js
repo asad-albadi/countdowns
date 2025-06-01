@@ -15,13 +15,12 @@ class WeekendCalculator {
         
         const isWeekend = isThursdayAfternoon || isFriday || isSaturday || isSundayMorning;
         
-        let targetDate;
+        let targetDate = new Date(currentTime);
         let eventType;
         
         if (isWeekend) {
             // We're in weekend - count until it ends (Sunday 8am)
             eventType = 'weekend-ending';
-            targetDate = new Date(currentTime);
             
             // Set to next Sunday 8am
             if (currentDay !== sunday) {
@@ -37,8 +36,12 @@ class WeekendCalculator {
             eventType = 'weekend-starting';
             
             // Calculate days until next Thursday
-            const daysUntilThursday = (thursday - currentDay + 7) % 7;
-            targetDate = new Date(currentTime);
+            let daysUntilThursday = (thursday - currentDay + 7) % 7;
+            // If we're on Thursday but before 3pm, we don't need to add 7 days
+            if (currentDay === thursday && currentHour < 15) {
+                daysUntilThursday = 0;
+            }
+            
             targetDate.setDate(currentTime.getDate() + daysUntilThursday);
             
             // Set to 3:00 PM (15:00)
