@@ -34,5 +34,14 @@
             "since_text": "Since Vodafone Oman Launch:",
             "until_text": "Vodafone Oman Launch Starts In:",
             "final_date_text": "Vodafone Oman Launch Date"
+        },
+        {
+            "id": 5,
+            "enabled": true,
+            "title": "Eid Ul Adha Holiday",
+            "targetDate": "2025-06-04T16:00:00",
+            "since_text": "Since Eid Ul Adha Holiday:",
+            "until_text": "Eid Ul Adha Holiday Ends In:",
+            "final_date_text": "Eid Ul Adha Holiday Date"
         }
 ] 
