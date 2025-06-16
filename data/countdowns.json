@@ -19,7 +19,7 @@
         },
         {
             "id": 3,
-            "enabled": true,
+            "enabled": false,
             "title": "Eid Ul Adha",
             "targetDate": "2025-06-06T00:00:00",
             "since_text": "Since Eid Ul Adha:",
@@ -28,7 +28,7 @@
         },
         {
             "id": 4,
-            "enabled": true,
+            "enabled": false,
             "title": "Vodafone Oman Launch",
             "targetDate": "2021-12-30T00:00:00",
             "since_text": "Since Vodafone Oman Launch:",
@@ -37,11 +37,20 @@
         },
         {
             "id": 5,
-            "enabled": true,
+            "enabled": false,
             "title": "Eid Ul Adha Holiday",
             "targetDate": "2025-06-04T16:00:00",
             "since_text": "Since Eid Ul Adha Holiday:",
             "until_text": "Eid Ul Adha Holiday Starts In:",
             "final_date_text": "Eid Ul Adha Holiday Date"
+        },
+        {
+            "id": 6,
+            "enabled": true,
+            "title": "Steam Summer Sale 2025",
+            "targetDate": "2025-06-26T21:00:00",
+            "since_text": "Since Steam Summer Sale 2025:",
+            "until_text": "Steam Summer Sale 2025 Starts In:",
+            "final_date_text": "Steam Summer Sale 2025 Date"
         }
 ] 
