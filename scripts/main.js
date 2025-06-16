@@ -197,9 +197,28 @@ class CountdownManager {
             this.currentTimeElement.textContent = DateUtils.formatCurrentTime(now);
             
             // Update each countdown
-            this.countdowns.forEach(countdown => {
+            this.countdowns.forEach((countdown, index) => {
                 const targetDate = new Date(countdown.targetDate);
                 const timeDiff = DateUtils.formatTimeDifference(now, targetDate);
+                
+                // Check if countdown should be disabled after reaching zero
+                if (countdown.disable_after_zero && timeDiff.isNegative) {
+                    // Remove the countdown card
+                    const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
+                    if (card) {
+                        card.remove();
+                    }
+                    
+                    // Remove from countdowns array
+                    this.countdowns.splice(index, 1);
+                    
+                    // If this was the main countdown, set a new main countdown
+                    if (this.mainCountdownId === countdown.id) {
+                        this.setMainCountdown(this.countdowns[0]?.id);
+                    }
+                    
+                    return;
+                }
                 
                 // Update time display
                 const timeElement = document.querySelector(`.countdown-time[data-id="${countdown.id}"]`);

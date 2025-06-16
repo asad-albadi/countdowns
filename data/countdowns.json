@@ -6,7 +6,8 @@
             "targetDate": "2024-09-26T18:00:00",
             "since_text": "Since Kshitij Left:",
             "until_text": "Kshitij Final Day At VFOM:",
-            "final_date_text": "Final Day Date"
+            "final_date_text": "Final Day Date",
+            "disable_after_zero": true
         },
         {
             "id": 2,
@@ -15,7 +16,8 @@
             "targetDate": "2024-10-18T18:00:00",
             "since_text": "Since Saira's Wedding:",
             "until_text": "Saira Wedding Starts In:",
-            "final_date_text": "Wedding Date"
+            "final_date_text": "Wedding Date",
+            "disable_after_zero": true
         },
         {
             "id": 3,
@@ -24,7 +26,8 @@
             "targetDate": "2025-06-06T00:00:00",
             "since_text": "Since Eid Ul Adha:",
             "until_text": "Eid Ul Adha Starts In:",
-            "final_date_text": "Eid Ul Adha Date"
+            "final_date_text": "Eid Ul Adha Date",
+            "disable_after_zero": true
         },
         {
             "id": 4,
@@ -33,7 +36,8 @@
             "targetDate": "2021-12-30T00:00:00",
             "since_text": "Since Vodafone Oman Launch:",
             "until_text": "Vodafone Oman Launch Starts In:",
-            "final_date_text": "Vodafone Oman Launch Date"
+            "final_date_text": "Vodafone Oman Launch Date",
+            "disable_after_zero": true
         },
         {
             "id": 5,
@@ -42,7 +46,8 @@
             "targetDate": "2025-06-04T16:00:00",
             "since_text": "Since Eid Ul Adha Holiday:",
             "until_text": "Eid Ul Adha Holiday Starts In:",
-            "final_date_text": "Eid Ul Adha Holiday Date"
+            "final_date_text": "Eid Ul Adha Holiday Date",
+            "disable_after_zero": true
         },
         {
             "id": 6,
@@ -51,6 +56,7 @@
             "targetDate": "2025-06-26T21:00:00",
             "since_text": "Since Steam Summer Sale 2025:",
             "until_text": "Steam Summer Sale 2025 Starts In:",
-            "final_date_text": "Steam Summer Sale 2025 Date"
+            "final_date_text": "Steam Summer Sale 2025 Date",
+            "disable_after_zero": true
         }
 ] 
