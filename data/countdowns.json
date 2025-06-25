@@ -58,5 +58,15 @@
             "until_text": "Steam Summer Sale 2025 Starts In:",
             "final_date_text": "Steam Summer Sale 2025 Date",
             "disable_after_zero": true
+        },
+        {
+            "id": 7,
+            "enabled": true,
+            "title": "Gamescom 2025",
+            "targetDate": "2025-08-20T13:00:00",
+            "since_text": "Since Gamescom 2025:",
+            "until_text": "Gamescom 2025 Starts In:",
+            "final_date_text": "Gamescom 2025 Date",
+            "disable_after_zero": true
         }
 ] 
