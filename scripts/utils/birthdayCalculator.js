@@ -35,8 +35,6 @@ class BirthdayCalculator {
             // Create the birthday date for the countdown
             const birthdayDate = new Date(nextBirthdayYear, month - 1, day, 0, 0, 0, 0);
             
-            // Calculate age
-            const age = this.calculateAge(birthday.birthday, birthdayDate);
             
             return {
                 id: birthday.id,
@@ -45,7 +43,7 @@ class BirthdayCalculator {
                 targetDate: birthdayDate.toISOString(),
                 since_text: `Since ${birthday.name}'s Birthday:`,
                 until_text: `${birthday.name}'s Birthday In:`,
-                final_date_text: `Birthday Date (Age ${age})`,
+                final_date_text: `Birthday Date`,
                 disable_after_zero: birthday.disable_after_zero || false,
                 isBirthday: true,
                 birthdayMonth: month,
@@ -80,21 +78,7 @@ class BirthdayCalculator {
         return currentMonth === birthdayMonth && currentDay <= birthdayDay;
     }
 
-    static calculateAge(birthdayString, birthdayDate) {
-        // For age calculation, we need the birth year
-        // Since we don't have it, we'll show "Turning XX" instead
-        // But for now, let's assume a reasonable age based on common workplace ages
-        
-        // This is a simplified approach - in a real application, 
-        // you'd want to store the birth year as well
-        const currentYear = new Date().getFullYear();
-        const birthdayYear = birthdayDate.getFullYear();
-        
-        // We'll use a placeholder approach here
-        // In reality, you'd want to store the full birth date including year
-        return "??"; // Placeholder since we don't have birth years
-    }
-
+ 
     static getActiveBirthdayCountdowns(birthdays) {
         // This method returns birthday countdowns that should be currently active
         const countdowns = this.createBirthdayCountdowns(birthdays);
