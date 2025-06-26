@@ -15,6 +15,11 @@ class CountdownManager {
             const response = await fetch('data/countdowns.json');
             this.countdowns = await response.json();
             
+            // Load and add birthday countdowns
+            const birthdays = await BirthdayCalculator.loadBirthdays();
+            const birthdayCountdowns = BirthdayCalculator.createBirthdayCountdowns(birthdays);
+            this.countdowns = this.countdowns.concat(birthdayCountdowns);
+            
             // Add weekend countdown
             this.countdowns.push(WeekendCalculator.createWeekendEvent());
             
@@ -31,6 +36,9 @@ class CountdownManager {
             
             // Start updates
             this.startUpdates();
+            
+            // Start birthday refresh timer (check every hour for new birthday countdowns)
+            this.startBirthdayRefresh();
 
             // Add fullscreen change detection
             document.addEventListener('fullscreenchange', () => {
@@ -190,6 +198,47 @@ class CountdownManager {
         }
     }
 
+    startBirthdayRefresh() {
+        // Check for new birthday countdowns every hour
+        setInterval(async () => {
+            try {
+                const birthdays = await BirthdayCalculator.loadBirthdays();
+                const newBirthdayCountdowns = BirthdayCalculator.createBirthdayCountdowns(birthdays);
+                
+                // Check if there are new birthday countdowns to add
+                newBirthdayCountdowns.forEach(newCountdown => {
+                    const existingCountdown = this.countdowns.find(c => c.id === newCountdown.id);
+                    if (!existingCountdown) {
+                        // Add new birthday countdown
+                        this.countdowns.push(newCountdown);
+                        
+                        // Create the countdown card
+                        const card = document.createElement('div');
+                        card.className = 'countdown-card';
+                        card.dataset.id = newCountdown.id;
+                        card.innerHTML = `
+                            <div class="countdown-title">${newCountdown.title}</div>
+                            <div class="countdown-time" data-id="${newCountdown.id}">--:--:--:--</div>
+                            <div class="countdown-label" data-id="${newCountdown.id}">${newCountdown.until_text}</div>
+                            <div class="countdown-date" data-id="${newCountdown.id}">${newCountdown.final_date_text}</div>
+                        `;
+                        
+                        // Add click event to make this the main countdown
+                        card.addEventListener('click', (e) => {
+                            // Skip if clicking on fullscreen button
+                            if (e.target.closest('.fullscreen-button')) return;
+                            this.setMainCountdown(newCountdown.id);
+                        });
+                        
+                        this.countdownsContainer.appendChild(card);
+                    }
+                });
+            } catch (error) {
+                console.error('Error refreshing birthday countdowns:', error);
+            }
+        }, 3600000); // Check every hour (3600000 milliseconds)
+    }
+
     startUpdates() {
         // Update current time
         setInterval(() => {
@@ -201,8 +250,28 @@ class CountdownManager {
                 const targetDate = new Date(countdown.targetDate);
                 const timeDiff = DateUtils.formatTimeDifference(now, targetDate);
                 
-                // Check if countdown should be disabled after reaching zero
-                if (countdown.disable_after_zero && timeDiff.isNegative) {
+                // Special handling for birthday countdowns
+                if (countdown.isBirthday && timeDiff.isNegative) {
+                    // For birthdays, hide the countdown after the birthday passes
+                    // until the next occurrence of the birthday month
+                    const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
+                    if (card) {
+                        card.remove();
+                    }
+                    
+                    // Remove from countdowns array
+                    this.countdowns.splice(index, 1);
+                    
+                    // If this was the main countdown, set a new main countdown
+                    if (this.mainCountdownId === countdown.id) {
+                        this.setMainCountdown(this.countdowns[0]?.id);
+                    }
+                    
+                    return;
+                }
+                
+                // Check if countdown should be disabled after reaching zero (for non-birthday countdowns)
+                if (countdown.disable_after_zero && timeDiff.isNegative && !countdown.isBirthday) {
                     // Remove the countdown card
                     const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
                     if (card) {

@@ -1,0 +1,121 @@
+[
+    {
+        "id": "bd_1",
+        "name": "Abdulrazaq Al Bulushi",
+        "birthday": "1-Jan",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_2",
+        "name": "Mohammed Al Balushi",
+        "birthday": "11-Feb",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_3",
+        "name": "Hani Al Foori",
+        "birthday": "1-May",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_4",
+        "name": "Mohammed Al Mamari",
+        "birthday": "16-Jun",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_5",
+        "name": "Saira Al Zadjali",
+        "birthday": "19-Jun",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_6",
+        "name": "Shafique Kakati",
+        "birthday": "20-Jul",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_7",
+        "name": "Pramod",
+        "birthday": "8-Aug",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_8",
+        "name": "Safa Al Mukhaini",
+        "birthday": "24-Aug",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_9",
+        "name": "Walaa Al Balushi",
+        "birthday": "15-Sep",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_10",
+        "name": "Qais Al Hajri",
+        "birthday": "17-Sep",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_11",
+        "name": "Ali Al Bimani",
+        "birthday": "30-Sep",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_12",
+        "name": "Ghanim Al Badaai",
+        "birthday": "5-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_13",
+        "name": "Asad Al Badi",
+        "birthday": "12-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_14",
+        "name": "Qais Al Arafati",
+        "birthday": "18-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_15",
+        "name": "Kshitij Tyagi",
+        "birthday": "19-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_16",
+        "name": "Hamood Al Rahbi",
+        "birthday": "29-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    },
+    {
+        "id": "bd_17",
+        "name": "Abdullah Al Tuhami",
+        "birthday": "30-Oct",
+        "enabled": true,
+        "disable_after_zero": false
+    }
+]
