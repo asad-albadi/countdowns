@@ -59,7 +59,7 @@
         "id": "bd_9",
         "name": "Walaa Al Balushi",
         "birthday": "15-Sep",
-        "enabled": true,
+        "enabled": false,
         "disable_after_zero": false
     },
     {
