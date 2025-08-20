@@ -49,13 +49,6 @@
         "disable_after_zero": false
     },
     {
-        "id": "bd_8",
-        "name": "Safa Al Mukhaini",
-        "birthday": "24-Aug",
-        "enabled": true,
-        "disable_after_zero": false
-    },
-    {
         "id": "bd_9",
         "name": "Walaa Al Balushi",
         "birthday": "15-Sep",
