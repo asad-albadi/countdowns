@@ -96,5 +96,12 @@
         "birthday": "30-Oct",
         "enabled": true,
         "disable_after_zero": false
+    },
+    {
+       "id": "bd_18",
+       "name": "Mohammed Al Marshudi",
+       "birthday": "22-Apr",
+       "enabled": true,
+       "disable_after_zero": false
     }
 ]
