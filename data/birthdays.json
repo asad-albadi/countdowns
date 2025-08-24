@@ -1,12 +1,5 @@
 [
     {
-        "id": "bd_1",
-        "name": "Abdulrazaq Al Bulushi",
-        "birthday": "1-Jan",
-        "enabled": true,
-        "disable_after_zero": false
-    },
-    {
         "id": "bd_2",
         "name": "Mohammed Al Balushi",
         "birthday": "11-Feb",
@@ -94,13 +87,6 @@
         "id": "bd_15",
         "name": "Kshitij Tyagi",
         "birthday": "19-Oct",
-        "enabled": true,
-        "disable_after_zero": false
-    },
-    {
-        "id": "bd_16",
-        "name": "Hamood Al Rahbi",
-        "birthday": "29-Oct",
         "enabled": true,
         "disable_after_zero": false
     },
