@@ -124,5 +124,83 @@
        "birthday": "20-Oct",
        "enabled": true,
        "disable_after_zero": false
+    },
+    {
+       "id": "bd_22",
+       "name": "Hamza Al Ghammari",
+       "birthday": "10-Nov",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_23",
+       "name": "Aflah Aljabri",
+       "birthday": "2-Oct",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_24",
+       "name": "Fatma Ali Al Balushi",
+       "birthday": "21-Mar",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_25",
+       "name": "Ahmed Dawood Alzadjali",
+       "birthday": "30-Jul",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_26",
+       "name": "Nauman Mahmood",
+       "birthday": "26-Dec",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_27",
+       "name": "Ashraf Al Kalbani",
+       "birthday": "28-Jan",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_28",
+       "name": "Alfaisal Alkhadhouri",
+       "birthday": "20-Jun",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_29",
+       "name": "Pranshu Sharma",
+       "birthday": "12-Sep",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_30",
+       "name": "Mahmood Al Rashdi",
+       "birthday": "9-Dec",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_31",
+       "name": "Sami Al Shukairi",
+       "birthday": "10-Jun",
+       "enabled": true,
+       "disable_after_zero": false
+    },
+    {
+       "id": "bd_32",
+       "name": "Ali Al Farai",
+       "birthday": "29-May",
+       "enabled": true,
+       "disable_after_zero": false
     }
+    
 ]
