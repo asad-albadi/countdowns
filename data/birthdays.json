@@ -201,6 +201,13 @@
        "birthday": "29-May",
        "enabled": true,
        "disable_after_zero": false
+    },
+    {
+       "id": "bd_33",
+       "name": "Hisham Al Hashmi",
+       "birthday": "3-Feb",
+       "enabled": true,
+       "disable_after_zero": false
     }
     
 ]
