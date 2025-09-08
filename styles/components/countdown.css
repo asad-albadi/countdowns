@@ -38,14 +38,86 @@
 .countdown-card.main-countdown {
     grid-column: 1 / -1;
     background: var(--main-card-background);
-    border-color: var(--accent-color, #4a90e2);
     transform: scale(1.05);
+    position: relative;
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow: hidden;
     box-shadow: 
         0 12px 24px rgba(0, 0, 0, 0.4),
         0 0 40px rgba(74, 144, 226, 0.3),
         inset 0 2px 0 rgba(255, 255, 255, 0.1),
         inset 0 -2px 0 rgba(0, 0, 0, 0.2);
-    position: relative;
+}
+
+.countdown-card.main-countdown::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-color),
+        transparent
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    animation: movingBorder 3s linear infinite;
+}
+
+@keyframes movingBorder {
+    0% {
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--accent-color),
+            transparent
+        );
+        transform: translateX(-100%);
+    }
+    25% {
+        background: linear-gradient(
+            180deg,
+            transparent,
+            var(--gaming-color),
+            transparent
+        );
+        transform: translateX(0%) translateY(-100%);
+    }
+    50% {
+        background: linear-gradient(
+            270deg,
+            transparent,
+            var(--event-color),
+            transparent
+        );
+        transform: translateX(100%) translateY(0%);
+    }
+    75% {
+        background: linear-gradient(
+            0deg,
+            transparent,
+            var(--holiday-color),
+            transparent
+        );
+        transform: translateX(0%) translateY(100%);
+    }
+    100% {
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--accent-color),
+            transparent
+        );
+        transform: translateX(-100%) translateY(0%);
+    }
 }
 
 .countdown-card.main-countdown .countdown-title {
@@ -78,10 +150,7 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
-    padding: 0.3rem 0.8rem;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0;
 }
 
 .countdown-icon {
@@ -116,10 +185,7 @@
         3px 3px 0px rgba(0, 0, 0, 1);
     font-weight: bold;
     color: #ffffff;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
     padding: 0.4rem 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(74, 144, 226, 0.3);
     margin: 0.2rem 0;
 }
 
