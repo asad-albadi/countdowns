@@ -312,11 +312,29 @@ class CountdownManager {
         }, 3600000); // Check every hour (3600000 milliseconds)
     }
 
+    syncBorderAnimation(currentTime) {
+        const mainCountdownCard = document.querySelector('.countdown-card.main-countdown');
+        if (!mainCountdownCard) return;
+        
+        const seconds = currentTime.getSeconds();
+        const milliseconds = currentTime.getMilliseconds();
+        
+        // Calculate counter-clockwise rotation: start at 0 degrees and go backwards
+        // 360 degrees - (6 degrees per second) for counter-clockwise movement
+        const totalDegrees = 360 - ((seconds * 6) + (milliseconds * 6 / 1000));
+        
+        // Set the CSS custom property for the gradient angle
+        mainCountdownCard.style.setProperty('--gradient-angle', `${totalDegrees}deg`);
+    }
+
     startUpdates() {
-        // Update current time
+        // Update current time and sync border animation
         setInterval(() => {
             const now = new Date();
             this.currentTimeElement.textContent = DateUtils.formatCurrentTime(now);
+            
+            // Sync border animation with current seconds
+            this.syncBorderAnimation(now);
             
             // Update each countdown
             this.countdowns.forEach((countdown, index) => {
