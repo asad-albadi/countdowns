@@ -1,77 +1,304 @@
 .countdown-card {
-    background-color: var(--card-background);
+    background: var(--card-background);
     border: 2px solid var(--card-border);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
 }
 
 .countdown-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
     border-color: var(--accent-color, #4a90e2);
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(74, 144, 226, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .countdown-card.main-countdown {
     grid-column: 1 / -1;
-    background-color: var(--main-card-background, #252525);
+    background: var(--main-card-background);
     border-color: var(--accent-color, #4a90e2);
     transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(74, 144, 226, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
 .countdown-card.main-countdown .countdown-title {
     font-size: 1.5em;
+    text-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.4),
+        0 0 25px rgba(74, 144, 226, 0.4),
+        0 3px 6px rgba(0, 0, 0, 0.6);
 }
 
 .countdown-card.main-countdown .countdown-time {
     font-size: 2.2em;
+    text-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(74, 144, 226, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.7);
 }
 
 .countdown-card.main-countdown:hover {
-    transform: scale(1.07);
+    transform: scale(1.07) translateY(-3px);
+    box-shadow: 
+        0 16px 32px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(74, 144, 226, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.countdown-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.countdown-icon {
+    width: 1.2em;
+    height: 1.2em;
+    color: inherit;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }
 
 .countdown-title {
     font-size: 1.2em;
-    text-align: center;
-    margin-bottom: 0.5rem;
+    text-align: left;
+    flex: 1;
+    text-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        2px 2px 0px rgba(0, 0, 0, 0.9);
+    letter-spacing: 1px;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0;
 }
 
 .countdown-time {
     font-size: 1.5em;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.6),
+        0 0 35px rgba(74, 144, 226, 0.4),
+        0 3px 6px rgba(0, 0, 0, 0.8),
+        3px 3px 0px rgba(0, 0, 0, 1);
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    margin: 0.2rem 0;
 }
 
 .countdown-label {
     font-size: 0.9em;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.9;
+    color: #e0e0e0;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.7),
+        1px 1px 0px rgba(0, 0, 0, 0.8);
+    font-weight: 500;
 }
 
 .countdown-date {
     font-size: 0.8em;
     text-align: center;
-    opacity: 0.7;
+    opacity: 0.85;
+    color: #d0d0d0;
     line-height: 1.2;
     margin-top: 0.3rem;
     white-space: normal;
+    text-shadow: 
+        0 0 8px rgba(255, 255, 255, 0.2),
+        0 1px 3px rgba(0, 0, 0, 0.6),
+        1px 1px 0px rgba(0, 0, 0, 0.7);
+    font-weight: 400;
 }
 
-/* Animation for time updates */
+/* Animations */
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.02); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes breathe {
+    0%, 100% { 
+        box-shadow: 
+            0 4px 8px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    50% { 
+        box-shadow: 
+            0 4px 8px rgba(0, 0, 0, 0.3),
+            0 0 25px rgba(74, 144, 226, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
 }
 
 .countdown-time.updating {
-    animation: pulse 0.5s ease;
+    animation: pulse 0.6s ease-in-out;
+}
+
+.countdown-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.countdown-card:nth-child(even) {
+    animation-delay: 0.1s;
+}
+
+.countdown-card:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+/* Category-based color indicators */
+.countdown-card.gaming {
+    border-color: var(--gaming-color);
+}
+
+.countdown-card.gaming:hover {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--gaming-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.countdown-card.gaming .countdown-time {
+    text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px var(--gaming-glow),
+        0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.countdown-card.event {
+    border-color: var(--event-color);
+}
+
+.countdown-card.event:hover {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--event-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.countdown-card.event .countdown-time {
+    text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px var(--event-glow),
+        0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.countdown-card.holiday {
+    border-color: var(--holiday-color);
+}
+
+.countdown-card.holiday:hover {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 30px var(--holiday-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.countdown-card.holiday .countdown-time {
+    text-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.4),
+        0 0 30px var(--holiday-glow),
+        0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Disabled countdown styling */
+.countdown-card.disabled {
+    opacity: 0.6;
+    border-color: #555;
+    background: linear-gradient(145deg, #0f0f0f 0%, #1a1a1a 100%);
+}
+
+.countdown-card.disabled:hover {
+    transform: none;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.countdown-card.disabled .countdown-time {
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Category-specific icon colors */
+.countdown-card.birthday .countdown-icon {
+    color: var(--holiday-color);
+    filter: drop-shadow(0 0 8px var(--holiday-glow));
+}
+
+.countdown-card.gaming .countdown-icon {
+    color: var(--gaming-color);
+    filter: drop-shadow(0 0 8px var(--gaming-glow));
+}
+
+.countdown-card.event .countdown-icon {
+    color: var(--event-color);
+    filter: drop-shadow(0 0 8px var(--event-glow));
+}
+
+.countdown-card.holiday .countdown-icon {
+    color: var(--holiday-color);
+    filter: drop-shadow(0 0 8px var(--holiday-glow));
+}
+
+.countdown-card.weekend .countdown-icon {
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .fullscreen-button {

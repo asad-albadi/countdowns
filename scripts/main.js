@@ -52,12 +52,21 @@ class CountdownManager {
     }
 
     createCountdownCards() {
-        this.countdowns.forEach(countdown => {
+        // Sort countdowns: birthdays by nearest date, others maintain order
+        const sortedCountdowns = this.sortCountdowns(this.countdowns);
+        
+        sortedCountdowns.forEach(countdown => {
             const card = document.createElement('div');
-            card.className = 'countdown-card';
+            const category = this.getCountdownCategory(countdown);
+            const icon = this.getCountdownIcon(countdown);
+            
+            card.className = `countdown-card ${category}`;
             card.dataset.id = countdown.id;
             card.innerHTML = `
-                <div class="countdown-title">${countdown.title}</div>
+                <div class="countdown-header">
+                    <i data-lucide="${icon}" class="countdown-icon"></i>
+                    <div class="countdown-title">${countdown.title}</div>
+                </div>
                 <div class="countdown-time" data-id="${countdown.id}">--:--:--:--</div>
                 <div class="countdown-label" data-id="${countdown.id}">${countdown.until_text}</div>
                 <div class="countdown-date" data-id="${countdown.id}">${countdown.final_date_text}</div>
@@ -72,6 +81,59 @@ class CountdownManager {
             
             this.countdownsContainer.appendChild(card);
         });
+        
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+    
+    sortCountdowns(countdowns) {
+        const now = new Date();
+        const birthdays = countdowns.filter(c => c.isBirthday);
+        const others = countdowns.filter(c => !c.isBirthday);
+        
+        // Sort birthdays by days until birthday (nearest first)
+        birthdays.sort((a, b) => {
+            const daysA = this.getDaysUntilTarget(now, new Date(a.targetDate));
+            const daysB = this.getDaysUntilTarget(now, new Date(b.targetDate));
+            return daysA - daysB;
+        });
+        
+        // Return sorted birthdays first, then others
+        return [...birthdays, ...others];
+    }
+    
+    getDaysUntilTarget(now, targetDate) {
+        const timeDiff = targetDate - now;
+        return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    }
+    
+    getCountdownCategory(countdown) {
+        if (countdown.isBirthday) return 'birthday';
+        if (countdown.id === 'weekend') return 'weekend';
+        
+        const title = countdown.title.toLowerCase();
+        if (title.includes('steam') || title.includes('gamescom') || title.includes('game')) return 'gaming';
+        if (title.includes('eid') || title.includes('holiday')) return 'holiday';
+        if (title.includes('wedding') || title.includes('event')) return 'event';
+        
+        return 'default';
+    }
+    
+    getCountdownIcon(countdown) {
+        const category = this.getCountdownCategory(countdown);
+        
+        const iconMap = {
+            birthday: 'cake',
+            weekend: 'calendar-days',
+            gaming: 'gamepad-2',
+            holiday: 'star',
+            event: 'party-popper',
+            default: 'clock'
+        };
+        
+        return iconMap[category] || 'clock';
     }
 
     setMainCountdown(countdownId) {
@@ -214,10 +276,16 @@ class CountdownManager {
                         
                         // Create the countdown card
                         const card = document.createElement('div');
-                        card.className = 'countdown-card';
+                        const category = this.getCountdownCategory(newCountdown);
+                        const icon = this.getCountdownIcon(newCountdown);
+                        
+                        card.className = `countdown-card ${category}`;
                         card.dataset.id = newCountdown.id;
                         card.innerHTML = `
-                            <div class="countdown-title">${newCountdown.title}</div>
+                            <div class="countdown-header">
+                                <i data-lucide="${icon}" class="countdown-icon"></i>
+                                <div class="countdown-title">${newCountdown.title}</div>
+                            </div>
                             <div class="countdown-time" data-id="${newCountdown.id}">--:--:--:--</div>
                             <div class="countdown-label" data-id="${newCountdown.id}">${newCountdown.until_text}</div>
                             <div class="countdown-date" data-id="${newCountdown.id}">${newCountdown.final_date_text}</div>
@@ -231,6 +299,11 @@ class CountdownManager {
                         });
                         
                         this.countdownsContainer.appendChild(card);
+                        
+                        // Initialize Lucide icons for the new card
+                        if (typeof lucide !== 'undefined') {
+                            lucide.createIcons();
+                        }
                     }
                 });
             } catch (error) {
