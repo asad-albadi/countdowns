@@ -29,11 +29,24 @@
 
 :root {
     --background-color: #000000;
+    --background-gradient: linear-gradient(135deg, #000000 0%, #0a0a0f 50%, #000000 100%);
     --text-color: #ffffff;
-    --card-background: #1a1a1a;
+    --text-glow: 0 0 10px rgba(255, 255, 255, 0.3);
+    --card-background: linear-gradient(145deg, #1a1a1a 0%, #252525 100%);
     --card-border: #333333;
     --accent-color: #4a90e2;
-    --main-card-background: #252525;
+    --accent-glow: 0 0 20px rgba(74, 144, 226, 0.4);
+    --main-card-background: linear-gradient(145deg, #252525 0%, #2a2a35 100%);
+    
+    /* Category Colors */
+    --gaming-color: #00ff88;
+    --gaming-glow: 0 0 15px rgba(0, 255, 136, 0.3);
+    --event-color: #ff6b35;
+    --event-glow: 0 0 15px rgba(255, 107, 53, 0.3);
+    --holiday-color: #ffd700;
+    --holiday-glow: 0 0 15px rgba(255, 215, 0, 0.3);
+    --default-color: #4a90e2;
+    --default-glow: 0 0 15px rgba(74, 144, 226, 0.3);
 }
 
 * {
@@ -43,7 +56,7 @@
 }
 
 body {
-    background-color: var(--background-color);
+    background: var(--background-gradient);
     color: var(--text-color);
     font-family: 'Digital-7 Mono', 'Digital-7', monospace;
     min-height: 100vh;
@@ -51,6 +64,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    text-shadow: var(--text-glow);
 }
 
 .container {
@@ -63,13 +77,28 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     font-size: clamp(16px, 4vw, 60px);
+    text-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.4),
+        0 0 25px rgba(74, 144, 226, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    font-weight: bold;
+    padding: 1rem;
+    background: linear-gradient(145deg, rgba(26, 26, 26, 0.8) 0%, rgba(37, 37, 37, 0.8) 100%);
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .countdowns-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
     padding: 1rem;
+    justify-items: center;
 }
 
 /* Responsive font sizes */
@@ -100,5 +129,36 @@ body {
 @media screen and (max-width: 767px) { /* Phone */
     .countdown-card {
         font-size: 16px;
+    }
+    
+    .countdowns-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .current-time {
+        margin-bottom: 1rem;
+        font-size: clamp(14px, 6vw, 32px);
+        padding: 0.75rem;
+    }
+    
+    body {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) { /* Small phones */
+    .countdown-card {
+        padding: 1rem;
+        font-size: 14px;
+    }
+    
+    .countdown-card.main-countdown .countdown-time {
+        font-size: 1.8em;
+    }
+    
+    .countdown-card.main-countdown .countdown-title {
+        font-size: 1.2em;
     }
 } 
