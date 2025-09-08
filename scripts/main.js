@@ -70,6 +70,7 @@ class CountdownManager {
                 <div class="countdown-time" data-id="${countdown.id}">--:--:--:--</div>
                 <div class="countdown-label" data-id="${countdown.id}">${countdown.until_text}</div>
                 <div class="countdown-date" data-id="${countdown.id}">${countdown.final_date_text}</div>
+                <div class="birthday-sparkles" data-id="${countdown.id}" style="display: none;"></div>
             `;
             
             // Add click event to make this the main countdown
@@ -289,6 +290,7 @@ class CountdownManager {
                             <div class="countdown-time" data-id="${newCountdown.id}">--:--:--:--</div>
                             <div class="countdown-label" data-id="${newCountdown.id}">${newCountdown.until_text}</div>
                             <div class="countdown-date" data-id="${newCountdown.id}">${newCountdown.final_date_text}</div>
+                            <div class="birthday-sparkles" data-id="${newCountdown.id}" style="display: none;"></div>
                         `;
                         
                         // Add click event to make this the main countdown
@@ -310,6 +312,79 @@ class CountdownManager {
                 console.error('Error refreshing birthday countdowns:', error);
             }
         }, 3600000); // Check every hour (3600000 milliseconds)
+    }
+
+    // Birthday sparkle effect management
+    createBirthdaySparkle(container) {
+        const birthdayEmojis = ['🎂', '🎉', '🎈', '🎁', '🎊', '🥳', '🍰', '🎀', '⭐', '💖'];
+        const emoji = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
+        
+        const sparkle = document.createElement('div');
+        sparkle.className = 'birthday-emoji';
+        sparkle.textContent = emoji;
+        
+        // Random horizontal position
+        sparkle.style.left = Math.random() * 100 + '%';
+        
+        // Random animation duration between 3-7 seconds
+        const duration = 3 + Math.random() * 4;
+        sparkle.style.animationDuration = duration + 's';
+        
+        // Random delay before starting
+        sparkle.style.animationDelay = Math.random() * 2 + 's';
+        
+        container.appendChild(sparkle);
+        
+        // Remove the sparkle after animation completes
+        setTimeout(() => {
+            if (sparkle.parentNode) {
+                sparkle.parentNode.removeChild(sparkle);
+            }
+        }, (duration + 2) * 1000);
+    }
+
+    startBirthdaySparkles(countdownId) {
+        const container = document.querySelector(`.birthday-sparkles[data-id="${countdownId}"]`);
+        if (!container) return;
+        
+        container.style.display = 'block';
+        
+        // Create sparkles every 800ms
+        const interval = setInterval(() => {
+            const card = document.querySelector(`.countdown-card[data-id="${countdownId}"]`);
+            if (!card || !card.classList.contains('birthday-sparkle-active')) {
+                clearInterval(interval);
+                container.style.display = 'none';
+                return;
+            }
+            
+            this.createBirthdaySparkle(container);
+        }, 800);
+        
+        return interval;
+    }
+
+    stopBirthdaySparkles(countdownId) {
+        const container = document.querySelector(`.birthday-sparkles[data-id="${countdownId}"]`);
+        if (container) {
+            container.style.display = 'none';
+            // Clear all existing sparkles
+            container.innerHTML = '';
+        }
+        
+        const card = document.querySelector(`.countdown-card[data-id="${countdownId}"]`);
+        if (card) {
+            card.classList.remove('birthday-sparkle-active');
+        }
+    }
+
+    checkBirthdaySparkleCondition(countdown, timeDiff) {
+        if (!countdown.isBirthday) return false;
+        
+        const daysDiff = timeDiff.days;
+        
+        // Show sparkles if between 1 day before and 1 day after birthday
+        return (daysDiff >= -1 && daysDiff <= 1);
     }
 
 
@@ -382,6 +457,19 @@ class CountdownManager {
                 const dateElement = document.querySelector(`.countdown-date[data-id="${countdown.id}"]`);
                 if (dateElement) {
                     dateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
+                }
+
+                // Handle birthday sparkle effect
+                if (countdown.isBirthday) {
+                    const shouldShowSparkles = this.checkBirthdaySparkleCondition(countdown, timeDiff);
+                    const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
+                    
+                    if (shouldShowSparkles && card && !card.classList.contains('birthday-sparkle-active')) {
+                        card.classList.add('birthday-sparkle-active');
+                        this.startBirthdaySparkles(countdown.id);
+                    } else if (!shouldShowSparkles && card && card.classList.contains('birthday-sparkle-active')) {
+                        this.stopBirthdaySparkles(countdown.id);
+                    }
                 }
                 
                 // Update fullscreen version if it exists and matches the current fullscreen countdown
