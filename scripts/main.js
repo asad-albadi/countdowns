@@ -246,10 +246,12 @@ class CountdownManager {
         
         // Add to body
         document.body.appendChild(this.fullscreenElement);
-        
+
         // Set flag
         this.isFullscreen = true;
         this.fullscreenCountdownId = countdownId;
+        // Mark body for fullscreen-centric styling (e.g., center birthday overlay)
+        document.body.classList.add('is-fullscreen');
         
         // Try to request actual fullscreen if supported
         if (document.documentElement.requestFullscreen) {
@@ -268,6 +270,7 @@ class CountdownManager {
         // Reset flag
         this.isFullscreen = false;
         this.fullscreenElement = null;
+        document.body.classList.remove('is-fullscreen');
         
         // Exit actual fullscreen if we're in it
         if (document.fullscreenElement && document.exitFullscreen) {
@@ -359,7 +362,7 @@ class CountdownManager {
         // Apply visibility: show only active birthdays
         this.applyPartyVisibility(activeIds);
 
-        // Create overlay containers
+        // Create overlay containers (top banner style)
         const overlay = document.createElement('div');
         overlay.className = 'birthday-overlay';
         overlay.id = 'birthday-overlay';
@@ -383,11 +386,22 @@ class CountdownManager {
             idx++;
             const msgTmpl = this.birthdayMessages[Math.floor(Math.random() * this.birthdayMessages.length)];
             const msg = msgTmpl.replace('{name}', name);
+            overlay.innerHTML = '';
             const msgEl = document.createElement('div');
             msgEl.className = 'birthday-message';
             msgEl.textContent = msg;
-            overlay.innerHTML = '';
             overlay.appendChild(msgEl);
+            if (names.length > 1) {
+                const listEl = document.createElement('div');
+                listEl.className = 'birthday-names';
+                names.forEach(n => {
+                    const chip = document.createElement('div');
+                    chip.className = 'name-chip';
+                    chip.textContent = n;
+                    listEl.appendChild(chip);
+                });
+                overlay.appendChild(listEl);
+            }
         };
         showMessage();
         this.birthdayMessageTimer = setInterval(showMessage, 6000);

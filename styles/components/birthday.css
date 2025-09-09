@@ -19,24 +19,44 @@
 /* Fullscreen celebratory overlay for messages */
 .birthday-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     pointer-events: none;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    padding: 10px 12px;
+}
+
+.birthday-party:not(.is-fullscreen) .container {
+    padding-top: clamp(64px, 9vw, 130px);
+}
+
+/* Center overlay in fullscreen */
+.is-fullscreen .birthday-overlay {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: min(92vw, 1200px);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .birthday-message {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    font-size: clamp(28px, 6vw, 80px);
+    font-size: clamp(22px, 4.2vw, 48px);
     font-weight: 800;
     color: #ffffff;
     text-align: center;
     line-height: 1.2;
-    padding: 0.5em 0.8em;
+    padding: 0.35em 0.7em;
     border-radius: 16px;
-    background: rgba(0,0,0,0.25);
+    background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.32));
     text-shadow:
         0 0 12px rgba(255,255,255,0.9),
         0 0 24px rgba(255, 64, 129, 0.6),
@@ -44,6 +64,25 @@
     transform: translateY(10px);
     opacity: 0;
     animation: messageIn 700ms ease forwards;
+}
+
+.birthday-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.name-chip {
+    pointer-events: none;
+    color: #fff;
+    font-size: clamp(12px, 2.4vw, 14px);
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    padding: 4px 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
 @keyframes messageIn {
@@ -74,4 +113,3 @@
     0% { transform: translateY(-20vh) rotate(0deg); }
     100% { transform: translateY(120vh) rotate(720deg); }
 }
-
