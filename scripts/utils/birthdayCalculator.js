@@ -74,8 +74,8 @@ class BirthdayCalculator {
         
         // Show countdown if:
         // 1. We're currently in the birthday month AND
-        // 2. The birthday hasn't passed more than 1 day ago this month
-        return currentMonth === birthdayMonth && currentDay <= (birthdayDay + 1);
+        // 2. The birthday hasn't passed more than 3 days ago this month
+        return currentMonth === birthdayMonth && currentDay <= (birthdayDay + 3);
     }
 
  
