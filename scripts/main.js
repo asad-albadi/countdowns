@@ -336,7 +336,7 @@ class CountdownManager {
     isWithinBirthdayWindow(now, targetDate) {
         const msPerDay = 1000 * 60 * 60 * 24;
         const diffDays = (targetDate - now) / msPerDay; // can be negative
-        return diffDays <= 3 && diffDays >= -1;
+        return diffDays <= 1 && diffDays >= -1;
     }
 
     // Activate bright celebration theme and focus birthdays
