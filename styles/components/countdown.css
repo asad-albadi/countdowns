@@ -157,42 +157,7 @@
     font-weight: 400;
 }
 
-/* Birthday sparkle animation */
-.birthday-sparkles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-.birthday-emoji {
-    position: absolute;
-    font-size: 1.5rem;
-    opacity: 0.6;
-    pointer-events: none;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    0% {
-        transform: translateY(-30px) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.6;
-    }
-    100% {
-        transform: translateY(300px) rotate(360deg);
-        opacity: 0;
-    }
-}
+/* Birthday in-card sparkles removed */
 
 /* Animations */
 @keyframes pulse {
