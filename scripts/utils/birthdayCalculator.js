@@ -72,10 +72,10 @@ class BirthdayCalculator {
         const currentMonth = now.getMonth() + 1;
         const currentDay = now.getDate();
         
-        // Show countdown only if:
+        // Show countdown if:
         // 1. We're currently in the birthday month AND
-        // 2. The birthday hasn't passed yet this month
-        return currentMonth === birthdayMonth && currentDay <= birthdayDay;
+        // 2. The birthday hasn't passed more than 3 days ago this month
+        return currentMonth === birthdayMonth && currentDay <= (birthdayDay + 3);
     }
 
  

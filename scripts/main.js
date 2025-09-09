@@ -6,6 +6,23 @@ class CountdownManager {
         this.mainCountdownId = 'weekend'; // Default to weekend as the main countdown
         this.isFullscreen = false;
         this.fullscreenElement = null;
+        // Birthday party state
+        this.birthdayPartyActive = false;
+        this.birthdayPartyForId = null;
+        this.currentPartyBirthdayIds = [];
+        this.birthdayMessageTimer = null;
+        this.birthdayMessages = [
+            "Happy Birthday, {name}! 🎉",
+            "Wishing you a day full of joy, {name}! 🥳",
+            "Let’s celebrate YOU today, {name}! 🎂",
+            "Cheers to another amazing year, {name}! 🎈",
+            "Have a fantastic birthday, {name}! 🎊",
+            "Cake, smiles, and good vibes, {name}! 🍰",
+            "Make a wish, {name}! ✨",
+            "You’re the star today, {name}! ⭐",
+            "Big hugs and birthday cheers, {name}! 🎁",
+            "Hope your day sparkles, {name}! 💖"
+        ];
         this.initialize();
     }
 
@@ -70,7 +87,6 @@ class CountdownManager {
                 <div class="countdown-time" data-id="${countdown.id}">--:--:--:--</div>
                 <div class="countdown-label" data-id="${countdown.id}">${countdown.until_text}</div>
                 <div class="countdown-date" data-id="${countdown.id}">${countdown.final_date_text}</div>
-                <div class="birthday-sparkles" data-id="${countdown.id}" style="display: none;"></div>
             `;
             
             // Add click event to make this the main countdown
@@ -230,10 +246,12 @@ class CountdownManager {
         
         // Add to body
         document.body.appendChild(this.fullscreenElement);
-        
+
         // Set flag
         this.isFullscreen = true;
         this.fullscreenCountdownId = countdownId;
+        // Mark body for fullscreen-centric styling (e.g., center birthday overlay)
+        document.body.classList.add('is-fullscreen');
         
         // Try to request actual fullscreen if supported
         if (document.documentElement.requestFullscreen) {
@@ -252,6 +270,7 @@ class CountdownManager {
         // Reset flag
         this.isFullscreen = false;
         this.fullscreenElement = null;
+        document.body.classList.remove('is-fullscreen');
         
         // Exit actual fullscreen if we're in it
         if (document.fullscreenElement && document.exitFullscreen) {
@@ -290,7 +309,6 @@ class CountdownManager {
                             <div class="countdown-time" data-id="${newCountdown.id}">--:--:--:--</div>
                             <div class="countdown-label" data-id="${newCountdown.id}">${newCountdown.until_text}</div>
                             <div class="countdown-date" data-id="${newCountdown.id}">${newCountdown.final_date_text}</div>
-                            <div class="birthday-sparkles" data-id="${newCountdown.id}" style="display: none;"></div>
                         `;
                         
                         // Add click event to make this the main countdown
@@ -314,78 +332,150 @@ class CountdownManager {
         }, 3600000); // Check every hour (3600000 milliseconds)
     }
 
-    // Birthday sparkle effect management
-    createBirthdaySparkle(container) {
-        const birthdayEmojis = ['🎂', '🎉', '🎈', '🎁', '🎊', '🥳', '🍰', '🎀', '⭐', '💖'];
-        const emoji = birthdayEmojis[Math.floor(Math.random() * birthdayEmojis.length)];
-        
-        const sparkle = document.createElement('div');
-        sparkle.className = 'birthday-emoji';
-        sparkle.textContent = emoji;
-        
-        // Random horizontal position
-        sparkle.style.left = Math.random() * 100 + '%';
-        
-        // Random animation duration between 3-7 seconds
-        const duration = 3 + Math.random() * 4;
-        sparkle.style.animationDuration = duration + 's';
-        
-        // Random delay before starting
-        sparkle.style.animationDelay = Math.random() * 2 + 's';
-        
-        container.appendChild(sparkle);
-        
-        // Remove the sparkle after animation completes
-        setTimeout(() => {
-            if (sparkle.parentNode) {
-                sparkle.parentNode.removeChild(sparkle);
-            }
-        }, (duration + 2) * 1000);
+    // Determine if birthday is within [-1, +3] days window
+    isWithinBirthdayWindow(now, targetDate) {
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const diffDays = (targetDate - now) / msPerDay; // can be negative
+        return diffDays <= 1 && diffDays >= -1;
     }
 
-    startBirthdaySparkles(countdownId) {
-        const container = document.querySelector(`.birthday-sparkles[data-id="${countdownId}"]`);
+    // Activate bright celebration theme and focus birthdays
+    activateBirthdayParty(birthdayCountdowns, primaryCountdown) {
+        const activeIds = birthdayCountdowns.map(b => b.id);
+        const idsChanged = this.currentPartyBirthdayIds.join(',') !== activeIds.join(',');
+        // If already active with same set, only ensure main focus
+        if (this.birthdayPartyActive && !idsChanged) {
+            if (primaryCountdown && this.birthdayPartyForId !== primaryCountdown.id) {
+                this.setMainCountdown(primaryCountdown.id);
+                this.birthdayPartyForId = primaryCountdown.id;
+            }
+            return;
+        }
+        // Reset and start fresh
+        this.deactivateBirthdayParty();
+        document.body.classList.add('birthday-party');
+        this.birthdayPartyActive = true;
+        this.birthdayPartyForId = primaryCountdown ? primaryCountdown.id : (activeIds[0] || null);
+        this.currentPartyBirthdayIds = activeIds;
+        if (this.birthdayPartyForId) this.setMainCountdown(this.birthdayPartyForId);
+
+        // Apply visibility: show only active birthdays
+        this.applyPartyVisibility(activeIds);
+
+        // Create overlay containers (top banner style)
+        const overlay = document.createElement('div');
+        overlay.className = 'birthday-overlay';
+        overlay.id = 'birthday-overlay';
+        const confetti = document.createElement('div');
+        confetti.className = 'birthday-confetti';
+        confetti.id = 'birthday-confetti';
+        document.body.appendChild(confetti);
+        document.body.appendChild(overlay);
+
+        // Prepare names (shuffle for fairness)
+        const names = birthdayCountdowns.map(b => b.personName || b.title.replace(/'s Birthday.*/i, '').trim());
+        for (let i = names.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [names[i], names[j]] = [names[j], names[i]];
+        }
+        let idx = 0;
+
+        const showMessage = () => {
+            if (!names.length) return;
+            const name = names[idx % names.length];
+            idx++;
+            const msgTmpl = this.birthdayMessages[Math.floor(Math.random() * this.birthdayMessages.length)];
+            const msg = msgTmpl.replace('{name}', name);
+            overlay.innerHTML = '';
+            const msgEl = document.createElement('div');
+            msgEl.className = 'birthday-message';
+            msgEl.textContent = msg;
+            overlay.appendChild(msgEl);
+            if (names.length > 1) {
+                const listEl = document.createElement('div');
+                listEl.className = 'birthday-names';
+                names.forEach(n => {
+                    const chip = document.createElement('div');
+                    chip.className = 'name-chip';
+                    chip.textContent = n;
+                    listEl.appendChild(chip);
+                });
+                overlay.appendChild(listEl);
+            }
+        };
+        showMessage();
+        this.birthdayMessageTimer = setInterval(showMessage, 6000);
+
+        // Start lightweight confetti loop
+        this.startConfetti(confetti);
+    }
+
+    // Stop celebration mode and cleanup
+    deactivateBirthdayParty() {
+        if (this.birthdayMessageTimer) {
+            clearInterval(this.birthdayMessageTimer);
+            this.birthdayMessageTimer = null;
+        }
+        document.body.classList.remove('birthday-party');
+        const overlay = document.getElementById('birthday-overlay');
+        if (overlay) overlay.remove();
+        const confetti = document.getElementById('birthday-confetti');
+        if (confetti) confetti.remove();
+        this.birthdayPartyActive = false;
+        this.birthdayPartyForId = null;
+        this.currentPartyBirthdayIds = [];
+        // Restore all cards visibility
+        this.applyPartyVisibility(null);
+    }
+
+    applyPartyVisibility(activeIds) {
+        const allCards = document.querySelectorAll('.countdown-card');
+        if (!activeIds || activeIds.length === 0) {
+            // show all
+            allCards.forEach(card => card.style.removeProperty('display'));
+            return;
+        }
+        const allowed = new Set(activeIds);
+        allCards.forEach(card => {
+            const id = card.dataset.id;
+            if (allowed.has(id)) {
+                card.style.removeProperty('display');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    startConfetti(container) {
         if (!container) return;
-        
-        container.style.display = 'block';
-        
-        // Create sparkles every 800ms
+        const colors = ['#FF5252', '#FF9800', '#FFEB3B', '#4CAF50', '#03A9F4', '#9C27B0', '#E91E63'];
+        const createPiece = () => {
+            if (!document.body.classList.contains('birthday-party')) return;
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.background = color;
+            piece.style.left = Math.random() * 100 + 'vw';
+            piece.style.top = '-10vh';
+            const duration = 4 + Math.random() * 4; // 4-8s
+            piece.style.animationDuration = duration + 's';
+            piece.style.transform = `rotate(${Math.random()*360}deg)`;
+            container.appendChild(piece);
+            // Cleanup after animation
+            setTimeout(() => piece.remove(), duration * 1000 + 100);
+        };
+        // Burst and steady trickle
+        for (let i = 0; i < 30; i++) setTimeout(createPiece, i * 80);
         const interval = setInterval(() => {
-            const card = document.querySelector(`.countdown-card[data-id="${countdownId}"]`);
-            if (!card || !card.classList.contains('birthday-sparkle-active')) {
+            if (!document.body.classList.contains('birthday-party')) {
                 clearInterval(interval);
-                container.style.display = 'none';
                 return;
             }
-            
-            this.createBirthdaySparkle(container);
-        }, 800);
-        
-        return interval;
+            for (let i = 0; i < 6; i++) createPiece();
+        }, 1000);
     }
 
-    stopBirthdaySparkles(countdownId) {
-        const container = document.querySelector(`.birthday-sparkles[data-id="${countdownId}"]`);
-        if (container) {
-            container.style.display = 'none';
-            // Clear all existing sparkles
-            container.innerHTML = '';
-        }
-        
-        const card = document.querySelector(`.countdown-card[data-id="${countdownId}"]`);
-        if (card) {
-            card.classList.remove('birthday-sparkle-active');
-        }
-    }
-
-    checkBirthdaySparkleCondition(countdown, timeDiff) {
-        if (!countdown.isBirthday) return false;
-        
-        const daysDiff = timeDiff.days;
-        
-        // Show sparkles if between 1 day before and 1 day after birthday
-        return (daysDiff >= -1 && daysDiff <= 1);
-    }
+    // Removed in-card birthday sparkles per request
 
 
     startUpdates() {
@@ -395,28 +485,33 @@ class CountdownManager {
             this.currentTimeElement.textContent = DateUtils.formatCurrentTime(now);
             
             // Update each countdown
+            // Track birthdays within [-1, +3] window
+            let closestPartyBirthday = null;
+            let closestAbsDiff = Infinity;
+            const activePartyBirthdays = [];
+
             this.countdowns.forEach((countdown, index) => {
                 const targetDate = new Date(countdown.targetDate);
                 const timeDiff = DateUtils.formatTimeDifference(now, targetDate);
                 
-                // Special handling for birthday countdowns
+                // Special handling for birthday countdowns: keep visible until 3 days after
                 if (countdown.isBirthday && timeDiff.isNegative) {
-                    // For birthdays, hide the countdown after the birthday passes
-                    // until the next occurrence of the birthday month
-                    const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
-                    if (card) {
-                        card.remove();
+                    const msPerDay = 1000 * 60 * 60 * 24;
+                    const daysPast = (now - targetDate) / msPerDay; // positive after birthday
+                    if (daysPast > 3) {
+                        // Hide/remove only if more than 3 days past
+                        const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
+                        if (card) {
+                            card.remove();
+                        }
+                        // Remove from countdowns array
+                        this.countdowns.splice(index, 1);
+                        // If this was the main countdown, set a new main countdown
+                        if (this.mainCountdownId === countdown.id) {
+                            this.setMainCountdown(this.countdowns[0]?.id);
+                        }
+                        return;
                     }
-                    
-                    // Remove from countdowns array
-                    this.countdowns.splice(index, 1);
-                    
-                    // If this was the main countdown, set a new main countdown
-                    if (this.mainCountdownId === countdown.id) {
-                        this.setMainCountdown(this.countdowns[0]?.id);
-                    }
-                    
-                    return;
                 }
                 
                 // Check if countdown should be disabled after reaching zero (for non-birthday countdowns)
@@ -459,16 +554,16 @@ class CountdownManager {
                     dateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
                 }
 
-                // Handle birthday sparkle effect
+                // Handle birthday party focus window (sparkles removed)
                 if (countdown.isBirthday) {
-                    const shouldShowSparkles = this.checkBirthdaySparkleCondition(countdown, timeDiff);
-                    const card = document.querySelector(`.countdown-card[data-id="${countdown.id}"]`);
-                    
-                    if (shouldShowSparkles && card && !card.classList.contains('birthday-sparkle-active')) {
-                        card.classList.add('birthday-sparkle-active');
-                        this.startBirthdaySparkles(countdown.id);
-                    } else if (!shouldShowSparkles && card && card.classList.contains('birthday-sparkle-active')) {
-                        this.stopBirthdaySparkles(countdown.id);
+                    // Check for party window [-1, +3] days
+                    if (this.isWithinBirthdayWindow(now, targetDate)) {
+                        activePartyBirthdays.push(countdown);
+                        const absMs = Math.abs(targetDate - now);
+                        if (absMs < closestAbsDiff) {
+                            closestAbsDiff = absMs;
+                            closestPartyBirthday = countdown;
+                        }
                     }
                 }
                 
@@ -492,6 +587,13 @@ class CountdownManager {
                     }
                 }
             });
+
+            // Toggle party mode based on active birthdays
+            if (activePartyBirthdays.length > 0) {
+                this.activateBirthdayParty(activePartyBirthdays, closestPartyBirthday || activePartyBirthdays[0]);
+            } else if (this.birthdayPartyActive) {
+                this.deactivateBirthdayParty();
+            }
             
             // Update tab title with the main countdown
             const mainCountdown = this.countdowns.find(c => c.id === this.mainCountdownId);
