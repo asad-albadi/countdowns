@@ -62,6 +62,16 @@
         {
             "id": 7,
             "enabled": true,
+            "title": "Steam Autumn Sale 2025",
+            "targetDate": "2025-09-29T21:00:00",
+            "since_text": "Since Steam Autumn Sale 2025:",
+            "until_text": "Steam Autumn Sale 2025 Starts In:",
+            "final_date_text": "Steam Autumn Sale 2025 Date",
+            "disable_after_zero": true
+        },
+        {
+            "id": 8,
+            "enabled": true,
             "title": "Gamescom 2025",
             "targetDate": "2025-08-20T13:00:00",
             "since_text": "Since Gamescom 2025:",
