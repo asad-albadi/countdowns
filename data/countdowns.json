@@ -58,7 +58,7 @@
     "since_text": "Since Steam Summer Sale 2025:",
     "until_text": "Steam Summer Sale 2025 Starts In:",
     "final_date_text": "Steam Summer Sale 2025 Date",
-    "disable_after_zero": true,
+    "disable_after_zero": false,
     "category": "gaming"
 },
 {
@@ -70,7 +70,7 @@
     "since_text": "Since Steam Autumn Sale 2025:",
     "until_text": "Steam Autumn Sale 2025 Starts In:",
     "final_date_text": "Steam Autumn Sale 2025 Date",
-    "disable_after_zero": true,
+    "disable_after_zero": false,
     "category": "gaming"
 },
 {
@@ -82,7 +82,7 @@
     "since_text": "Since Gamescom 2025:",
     "until_text": "Gamescom 2025 Starts In:",
     "final_date_text": "Gamescom 2025 Date",
-    "disable_after_zero": true,
+    "disable_after_zero": false,
     "category": "gaming"
 },
 {
@@ -94,7 +94,19 @@
     "since_text": "Since Legion Remix:",
     "until_text": "Legion Remix Starts In:",
     "final_date_text": "Legion Remix Date",
-    "disable_after_zero": true,
+    "disable_after_zero": false,
+    "category": "gaming"
+},
+{
+    "id": 10,
+    "enabled": true,
+    "title": "WoW: Legion Remix",
+    "targetDate": "2025-09-17T00:00:00",
+    "endDate": "2026-01-19T00:00:00", 
+    "since_text": "Since Legion Remix:",
+    "until_text": "Legion Remix Starts In:",
+    "final_date_text": "Legion Remix Date",
+    "disable_after_zero": false,
     "category": "gaming"
 }
 
