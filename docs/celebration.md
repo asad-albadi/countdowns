@@ -7,11 +7,11 @@
 - Shows days remaining until birthday
 - Regular styling with birthday category colors
 
-### Early Birthday Mode (1-0.5 days)
+### Early Birthday Mode (1-0 days)
 - **Label**: Changes to "Happy Early Birthday! <�"
 - **Animation**: Bucket filling animation from bottom to top
   - Pink gradient "water" fills the card background
-  - Fill percentage: 0% at 1 day → 100% at 0.5 days
+  - Fill percentage: 0% at 1 day → 100% at 0 days
 - **Visual Effects**:
   - Bouncing cake emoji <� after the name
   - Holiday-themed colors and glow effects
@@ -33,7 +33,7 @@
 ## Technical Implementation
 
 ### CSS Classes
-- `.early-birthday`: Applied during 1-0.5 days period
+- `.early-birthday`: Applied during 1-0 days period
 - `.birthday-party`: Applied to body during celebration
 - `--fill-height`: CSS custom property for bucket fill percentage
 

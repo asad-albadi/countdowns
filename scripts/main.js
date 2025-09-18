@@ -700,7 +700,7 @@ class CountdownManager {
                     const daysDiff = (targetDate - now) / msPerDay;
 
                     // Early birthday mode: 1 day to 0 days remaining
-                    if (daysDiff >= 0 && daysDiff <= 1) {
+                    if (daysDiff > 0 && daysDiff <= 1) {
                         this.activateEarlyBirthday(countdown, daysDiff);
                     } else {
                         // Clean up early birthday mode if no longer applicable
