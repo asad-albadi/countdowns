@@ -40,10 +40,21 @@ class CountdownManager {
             // Add weekend countdown
             this.countdowns.push(WeekendCalculator.createWeekendEvent());
             
-            // Filter out disabled countdowns
-            this.countdowns = this.countdowns.filter(countdown => 
-                countdown.enabled === undefined || countdown.enabled === true
-            );
+            // Filter out disabled countdowns and events more than 15 days away
+            this.countdowns = this.countdowns.filter(countdown => {
+                if (countdown.enabled === false) return false;
+
+                // For non-birthday events, only show if within 15 days
+                if (!countdown.isBirthday) {
+                    const targetDate = new Date(countdown.targetDate);
+                    const now = new Date();
+                    const msPerDay = 1000 * 60 * 60 * 24;
+                    const daysDiff = Math.ceil((targetDate - now) / msPerDay);
+                    return daysDiff >= 0 && daysDiff <= 15;
+                }
+
+                return true; // Keep all birthdays (they have their own filter)
+            });
             
             // Create countdown cards
             this.createCountdownCards();
