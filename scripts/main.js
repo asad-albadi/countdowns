@@ -688,10 +688,18 @@ class CountdownManager {
                     }
                 }
                 
-                // Update date
+                // Update date with special handling for ongoing events
                 const dateElement = document.querySelector(`.countdown-date[data-id="${countdown.id}"]`);
                 if (dateElement) {
-                    dateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
+                    const category = this.getCountdownCategory(countdown);
+
+                    if (category.startsWith('ongoing-') && countdown.endDate) {
+                        // For ongoing events, show end date
+                        const endDate = new Date(countdown.endDate);
+                        dateElement.textContent = `Event ends: ${DateUtils.formatLongDate(endDate)}`;
+                    } else {
+                        dateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
+                    }
                 }
 
                 // Handle birthday special modes
@@ -722,19 +730,51 @@ class CountdownManager {
                 if (this.isFullscreen && this.fullscreenCountdownId === countdown.id) {
                     const fsTimeElement = document.querySelector(`.countdown-time[data-id="${countdown.id}-fullscreen"]`);
                     if (fsTimeElement) {
-                        fsTimeElement.textContent = DateUtils.formatCountdownTime(timeDiff);
+                        const category = this.getCountdownCategory(countdown);
+
+                        if (category.startsWith('ongoing-') && countdown.endDate) {
+                            // For ongoing events in fullscreen, show countdown to end date
+                            const endDate = new Date(countdown.endDate);
+                            const endTimeDiff = DateUtils.formatTimeDifference(now, endDate);
+                            fsTimeElement.textContent = DateUtils.formatCountdownTime(endTimeDiff);
+                        } else {
+                            fsTimeElement.textContent = DateUtils.formatCountdownTime(timeDiff);
+                        }
                         fsTimeElement.classList.add('updating');
                         setTimeout(() => fsTimeElement.classList.remove('updating'), 500);
                     }
                     
                     const fsLabelElement = document.querySelector(`.countdown-label[data-id="${countdown.id}-fullscreen"]`);
                     if (fsLabelElement) {
-                        fsLabelElement.textContent = timeDiff.isNegative ? countdown.since_text : countdown.until_text;
+                        const category = this.getCountdownCategory(countdown);
+
+                        if (category.startsWith('ongoing-')) {
+                            // For ongoing events in fullscreen, show time remaining until end
+                            if (countdown.endDate) {
+                                const endDate = new Date(countdown.endDate);
+                                const endTimeDiff = DateUtils.formatTimeDifference(now, endDate);
+                                fsLabelElement.textContent = endTimeDiff.isNegative
+                                    ? "Event has ended"
+                                    : "🔥 Event ends in:";
+                            } else {
+                                fsLabelElement.textContent = "🎮 Event is live!";
+                            }
+                        } else {
+                            fsLabelElement.textContent = timeDiff.isNegative ? countdown.since_text : countdown.until_text;
+                        }
                     }
                     
                     const fsDateElement = document.querySelector(`.countdown-date[data-id="${countdown.id}-fullscreen"]`);
                     if (fsDateElement) {
-                        fsDateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
+                        const category = this.getCountdownCategory(countdown);
+
+                        if (category.startsWith('ongoing-') && countdown.endDate) {
+                            // For ongoing events in fullscreen, show end date
+                            const endDate = new Date(countdown.endDate);
+                            fsDateElement.textContent = `Event ends: ${DateUtils.formatLongDate(endDate)}`;
+                        } else {
+                            fsDateElement.textContent = `${countdown.final_date_text}: ${DateUtils.formatLongDate(targetDate)}`;
+                        }
                     }
                 }
             });

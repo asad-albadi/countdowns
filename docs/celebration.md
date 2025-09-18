@@ -1,4 +1,4 @@
-# Birthday Celebration Flow
+# Celebration Flows
 
 ## Timeline
 
@@ -49,3 +49,79 @@
 - **Early Birthday**: `daysDiff >= 0 && daysDiff <= 1`
 - **Celebration**: `daysDiff <= 0 && daysDiff >= -0.5`
 - **Display Filter**: `daysDiff >= 0 && daysDiff <= 10` OR early birthday OR celebration window
+
+---
+
+# Gaming/Event Celebration Flow
+
+## Event States
+
+### Pre-Event (Before targetDate)
+- Standard countdown display to event start
+- Shows "Event Starts In:" or custom `until_text`
+- Displays event start date (`targetDate`)
+- Uses category-specific styling (e.g., `gaming` category)
+
+### Ongoing Event (targetDate to endDate)
+- **Label**: Automatically changes to "🔥 Event ends in:"
+- **Countdown**: Switches to counting down to `endDate` instead of `targetDate`
+- **Date Display**: Changes to show "Event ends: [endDate]" instead of start date
+- **Category**: Prefixed with "ongoing-" (e.g., `ongoing-gaming`)
+- **Icon**: Changes to activity-specific ongoing icon (e.g., `play-circle` for gaming events)
+
+### Post-Event (After endDate)
+- **Label**: Shows "Event has ended"
+- **Countdown**: Stops updating or may be removed based on configuration
+- Event may be filtered out of display
+
+## Technical Implementation
+
+### Event Detection
+- Events with both `targetDate` and `endDate` are automatically detected
+- Current time is compared against both dates to determine state
+- Category is dynamically updated with "ongoing-" prefix during active period
+
+### Display Logic
+```javascript
+if (category.startsWith('ongoing-') && countdown.endDate) {
+    // Show countdown to end date
+    const endDate = new Date(countdown.endDate);
+    const endTimeDiff = DateUtils.formatTimeDifference(now, endDate);
+
+    // Update label to "Event ends in:"
+    labelElement.textContent = endTimeDiff.isNegative
+        ? "Event has ended"
+        : "🔥 Event ends in:";
+
+    // Update date display to show end date
+    dateElement.textContent = `Event ends: ${DateUtils.formatLongDate(endDate)}`;
+
+    // Update countdown time to end date
+    timeElement.textContent = DateUtils.formatCountdownTime(endTimeDiff);
+}
+```
+
+### CSS Classes
+- Base category class (e.g., `gaming`)
+- Ongoing state class (e.g., `ongoing-gaming`)
+- Icons automatically switch based on ongoing state
+
+## Configuration
+
+### JSON Structure
+```json
+{
+    "id": 6,
+    "enabled": true,
+    "title": "Steam Summer Sale 2025",
+    "targetDate": "2025-06-26T21:00:00",
+    "endDate": "2025-07-10T21:00:00",
+    "until_text": "Steam Summer Sale 2025 Starts In:",
+    "category": "gaming"
+}
+```
+
+### Required Fields for Event Flow
+- `targetDate`: When the event starts
+- `endDate`: When the event ends
+- `category`: For proper styling and icon selection
