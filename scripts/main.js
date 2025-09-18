@@ -149,12 +149,16 @@ class CountdownManager {
     getCountdownCategory(countdown) {
         if (countdown.isBirthday) return 'birthday';
         if (countdown.id === 'weekend') return 'weekend';
-        
+
+        // Use category field from JSON if available
+        if (countdown.category) return countdown.category;
+
+        // Fallback to title-based detection
         const title = countdown.title.toLowerCase();
         if (title.includes('steam') || title.includes('gamescom') || title.includes('game')) return 'gaming';
         if (title.includes('eid') || title.includes('holiday')) return 'holiday';
         if (title.includes('wedding') || title.includes('event')) return 'event';
-        
+
         return 'default';
     }
     
