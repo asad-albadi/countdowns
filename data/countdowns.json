@@ -96,18 +96,6 @@
     "final_date_text": "Legion Remix Date",
     "disable_after_zero": false,
     "category": "gaming"
-},
-{
-    "id": 10,
-    "enabled": true,
-    "title": "WoW: Legion Remix",
-    "targetDate": "2025-09-17T00:00:00",
-    "endDate": "2026-01-19T00:00:00", 
-    "since_text": "Since Legion Remix:",
-    "until_text": "Legion Remix Starts In:",
-    "final_date_text": "Legion Remix Date",
-    "disable_after_zero": false,
-    "category": "gaming"
 }
 
 ] 

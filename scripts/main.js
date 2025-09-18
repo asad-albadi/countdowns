@@ -11,6 +11,8 @@ class CountdownManager {
         this.birthdayPartyForId = null;
         this.currentPartyBirthdayIds = [];
         this.birthdayMessageTimer = null;
+        this.birthdayRotationTimer = null;
+        this.showingBirthdayOnly = false;
         this.birthdayMessages = [
             "Happy Birthday, {name}! 🎉",
             "Wishing you a day full of joy, {name}! 🥳",
@@ -398,8 +400,8 @@ class CountdownManager {
         this.currentPartyBirthdayIds = activeIds;
         if (this.birthdayPartyForId) this.setMainCountdown(this.birthdayPartyForId);
 
-        // Apply visibility: show only active birthdays
-        this.applyPartyVisibility(activeIds);
+        // Start birthday rotation (30s birthday, 30s normal)
+        this.startBirthdayRotation(activeIds);
 
         // Create overlay containers (top banner style)
         const overlay = document.createElement('div');
@@ -436,7 +438,6 @@ class CountdownManager {
                 names.forEach(n => {
                     const chip = document.createElement('div');
                     chip.className = 'name-chip';
-                    chip.textContent = n;
                     listEl.appendChild(chip);
                 });
                 overlay.appendChild(listEl);
@@ -449,11 +450,48 @@ class CountdownManager {
         this.startConfetti(confetti);
     }
 
+    // Start birthday rotation: 30s birthday only, 30s normal view
+    startBirthdayRotation(birthdayIds) {
+        if (this.birthdayRotationTimer) {
+            clearInterval(this.birthdayRotationTimer);
+        }
+
+        // Start showing birthday only
+        this.showingBirthdayOnly = true;
+        this.applyPartyVisibility(birthdayIds);
+
+        this.birthdayRotationTimer = setInterval(() => {
+            if (this.showingBirthdayOnly) {
+                // Switch to normal view (show all countdowns with normal theme)
+                document.body.classList.remove('birthday-party');
+                const overlay = document.getElementById('birthday-overlay');
+                const confetti = document.getElementById('birthday-confetti');
+                if (overlay) overlay.style.display = 'none';
+                if (confetti) confetti.style.display = 'none';
+                this.applyPartyVisibility(null);
+                this.showingBirthdayOnly = false;
+            } else {
+                // Switch back to birthday celebration
+                document.body.classList.add('birthday-party');
+                const overlay = document.getElementById('birthday-overlay');
+                const confetti = document.getElementById('birthday-confetti');
+                if (overlay) overlay.style.display = 'block';
+                if (confetti) confetti.style.display = 'block';
+                this.applyPartyVisibility(birthdayIds);
+                this.showingBirthdayOnly = true;
+            }
+        }, 30000); // 30 seconds
+    }
+
     // Stop celebration mode and cleanup
     deactivateBirthdayParty() {
         if (this.birthdayMessageTimer) {
             clearInterval(this.birthdayMessageTimer);
             this.birthdayMessageTimer = null;
+        }
+        if (this.birthdayRotationTimer) {
+            clearInterval(this.birthdayRotationTimer);
+            this.birthdayRotationTimer = null;
         }
         document.body.classList.remove('birthday-party');
         const overlay = document.getElementById('birthday-overlay');
@@ -463,6 +501,7 @@ class CountdownManager {
         this.birthdayPartyActive = false;
         this.birthdayPartyForId = null;
         this.currentPartyBirthdayIds = [];
+        this.showingBirthdayOnly = false;
         // Restore all cards visibility
         this.applyPartyVisibility(null);
     }

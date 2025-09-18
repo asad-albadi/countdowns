@@ -78,8 +78,9 @@ class BirthdayCalculator {
 
         // Show birthday if:
         // 1. Countdown appearance: 15 days or less remaining, OR
-        // 2. Celebration appearance: 1 day remaining until 0.5 days before birthday
-        return (daysDiff >= 0 && daysDiff <= 15) || (daysDiff >= 0.5 && daysDiff <= 1);
+        // 2. Early birthday appearance: 1 day remaining until 0.5 days before birthday, OR
+        // 3. Celebration appearance: 0 to -0.5 days (birthday day celebration)
+        return (daysDiff >= 0 && daysDiff <= 15) || (daysDiff >= 0.5 && daysDiff <= 1) || (daysDiff >= -0.5 && daysDiff <= 0);
     }
 
  
