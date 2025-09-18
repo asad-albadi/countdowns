@@ -69,13 +69,17 @@ class BirthdayCalculator {
     }
 
     static shouldShowCountdown(now, birthdayMonth, birthdayDay) {
-        const currentMonth = now.getMonth() + 1;
-        const currentDay = now.getDate();
-        
-        // Show countdown if:
-        // 1. We're currently in the birthday month AND
-        // 2. The birthday hasn't passed more than 3 days ago this month
-        return currentMonth === birthdayMonth && currentDay <= (birthdayDay + 3);
+        const currentYear = now.getFullYear();
+
+        // Create the birthday date for this year
+        const birthdayThisYear = new Date(currentYear, birthdayMonth - 1, birthdayDay, 0, 0, 0, 0);
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const daysDiff = (birthdayThisYear - now) / msPerDay;
+
+        // Show birthday if:
+        // 1. Countdown appearance: 15 days or less remaining, OR
+        // 2. Celebration appearance: 1 day remaining until 0.5 days before birthday
+        return (daysDiff >= 0 && daysDiff <= 15) || (daysDiff >= 0.5 && daysDiff <= 1);
     }
 
  
