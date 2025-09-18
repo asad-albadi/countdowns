@@ -2,18 +2,18 @@
 
 ## Timeline
 
-### Normal Countdown (15-1 days)
+### Normal Countdown (10-1 days)
 - Standard birthday countdown display
 - Shows days remaining until birthday
 - Regular styling with birthday category colors
 
-### Early Birthday Mode (1-0 days)
-- **Label**: Changes to "Happy Early Birthday! <‰"
+### Early Birthday Mode (1-0.5 days)
+- **Label**: Changes to "Happy Early Birthday! <ï¿½"
 - **Animation**: Bucket filling animation from bottom to top
   - Pink gradient "water" fills the card background
-  - Fill percentage: 0% at 1 day ’ 100% at 0 days
+  - Fill percentage: 0% at 1 day â†’ 100% at 0.5 days
 - **Visual Effects**:
-  - Bouncing cake emoji <‚ after the name
+  - Bouncing cake emoji <ï¿½ after the name
   - Holiday-themed colors and glow effects
   - Special border styling
 
@@ -33,7 +33,7 @@
 ## Technical Implementation
 
 ### CSS Classes
-- `.early-birthday`: Applied during 1-0 days period
+- `.early-birthday`: Applied during 1-0.5 days period
 - `.birthday-party`: Applied to body during celebration
 - `--fill-height`: CSS custom property for bucket fill percentage
 
@@ -48,4 +48,4 @@
 ### Timing Windows
 - **Early Birthday**: `daysDiff >= 0 && daysDiff <= 1`
 - **Celebration**: `daysDiff <= 0 && daysDiff >= -0.5`
-- **Display Filter**: `daysDiff >= 0 && daysDiff <= 15` OR celebration window
+- **Display Filter**: `daysDiff >= 0 && daysDiff <= 10` OR early birthday OR celebration window
