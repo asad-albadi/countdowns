@@ -6,6 +6,8 @@ class CountdownManager {
         this.mainCountdownId = 'weekend'; // Default to weekend as the main countdown
         this.isFullscreen = false;
         this.fullscreenElement = null;
+        // Reload control
+        this.reloadTriggered = false; // Ensure we only reload once when a timer hits 00:00:00
         // Birthday party state
         this.birthdayPartyActive = false;
         this.birthdayPartyForId = null;
@@ -75,9 +77,12 @@ class CountdownManager {
             
             // Start time/text updates (1s)
             this.startUpdates();
-            
+
             // Start birthday refresh timer (check every hour for new birthday countdowns)
             this.startBirthdayRefresh();
+
+            // Schedule a full page refresh at local midnight
+            this.scheduleMidnightReload();
 
             // Add fullscreen change detection
             document.addEventListener('fullscreenchange', () => {
@@ -666,6 +671,16 @@ class CountdownManager {
                     timeElement.classList.add('updating');
                     setTimeout(() => timeElement.classList.remove('updating'), 500);
                 }
+
+                // If any countdown reaches exactly 00:00:00, reload the page once
+                // Use a small window to catch the crossing even if the tick isn't perfectly aligned
+                const msToTarget = new Date(countdown.targetDate) - now;
+                if (!this.reloadTriggered && msToTarget <= 0 && msToTarget > -1100) {
+                    this.reloadTriggered = true;
+                    // Full page refresh to re-evaluate events (e.g., swap to next phase)
+                    window.location.reload();
+                    return; // Stop further processing in this tick
+                }
                 
                 // Update label with special handling for ongoing events
                 const labelElement = document.querySelector(`.countdown-label[data-id="${countdown.id}"]`);
@@ -794,6 +809,18 @@ class CountdownManager {
                 document.title = DateUtils.formatTabTitle(timeDiff);
             }
         }, 1000);
+    }
+
+    scheduleMidnightReload() {
+        const now = new Date();
+        const nextMidnight = new Date(now);
+        nextMidnight.setHours(24, 0, 0, 0); // Set to local midnight of the next day
+        const msUntilMidnight = nextMidnight - now;
+        if (msUntilMidnight > 0) {
+            setTimeout(() => {
+                window.location.reload();
+            }, msUntilMidnight);
+        }
     }
 }
 
