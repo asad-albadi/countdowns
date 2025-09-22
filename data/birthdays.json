@@ -208,6 +208,13 @@
        "birthday": "3-Feb",
        "enabled": true,
        "disable_after_zero": false
+    },
+   {
+       "id": "bd_34",
+       "name": "Ahmed Jaboub",
+       "birthday": "14-Jun",
+       "enabled": true,
+       "disable_after_zero": false
     }
     
 ]
