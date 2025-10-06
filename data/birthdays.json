@@ -70,13 +70,6 @@
         "disable_after_zero": false
     },
     {
-        "id": "bd_13",
-        "name": "Asad Al Badi",
-        "birthday": "12-Oct",
-        "enabled": true,
-        "disable_after_zero": false
-    },
-    {
         "id": "bd_14",
         "name": "Qais Al Arafati",
         "birthday": "18-Oct",
