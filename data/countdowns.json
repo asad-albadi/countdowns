@@ -97,6 +97,19 @@
     "final_date_text": "Legion Remix Date",
     "disable_after_zero": false,
     "category": "gaming"
+},
+
+      {
+    "id": 10,
+    "enabled": true,
+    "title": "Steam Winter Sale 2025",
+    "targetDate": "2025-12-18T21:00:00", 
+    "endDate": "2026-01-05T21:00:00", 
+    "since_text": "Since Steam Winter Sale 2025:",
+    "until_text": "Steam Winter Sale 2025 Starts In:",
+    "final_date_text": "Steam Winter Sale 2025 Date",
+    "disable_after_zero": false,
+    "category": "gaming"
 }
 
 ] 
