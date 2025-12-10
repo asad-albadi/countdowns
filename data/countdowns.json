@@ -123,6 +123,19 @@
     "final_date_text": "Technology Day Out 2025 Date",
     "disable_after_zero": false,
     "category": "work"
+},
+
+      {
+    "id": 12,
+    "enabled": true,
+    "title": "World Of Warcraft: Midnight Early Access",
+    "targetDate": "2025-02-28T03:00:00", 
+    "endDate": "2025-03-03T03:00:00", 
+    "since_text": "World Of Warcraft: Midnight:",
+    "until_text": "World Of Warcraft: Midnight Starts In:",
+    "final_date_text": "World Of Warcraft: Midnight Date",
+    "disable_after_zero": false,
+    "category": "gaming"
 }
 
 ] 
