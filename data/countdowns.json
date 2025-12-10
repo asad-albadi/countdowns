@@ -110,6 +110,19 @@
     "final_date_text": "Steam Winter Sale 2025 Date",
     "disable_after_zero": false,
     "category": "gaming"
+},
+
+      {
+    "id": 11,
+    "enabled": true,
+    "title": "Technology Day Out 2025",
+    "targetDate": "2025-12-10T08:00:00", 
+    "endDate": "2025-12-10T22:00:00", 
+    "since_text": "Since Technology Day Out 2025:",
+    "until_text": "Technology Day Out 2025 Starts In:",
+    "final_date_text": "Technology Day Out 2025 Date",
+    "disable_after_zero": false,
+    "category": "work"
 }
 
 ] 
