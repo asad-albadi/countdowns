@@ -149,7 +149,17 @@
     "final_date_text": "World Of Warcraft: Midnight - Pre-Patch Date",
     "disable_after_zero": false,
     "category": "gaming"
-}
+},
+                {
+            "id": 5,
+            "enabled": false,
+            "title": "Eid Ul Adha Holiday",
+            "targetDate": "2026-05-27T00:00:00",
+            "since_text": "Since Eid Ul Adha Holiday:",
+            "until_text": "Eid Ul Adha Holiday Starts In:",
+            "final_date_text": "Eid Ul Adha Holiday Date",
+            "disable_after_zero": true
+        },
 
 ] 
 
