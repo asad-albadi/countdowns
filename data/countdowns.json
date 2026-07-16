@@ -11,13 +11,13 @@
         },
         {
             "id": 2,
-            "enabled": false,
+            "enabled": true,
             "title": "Saira Wedding",
             "targetDate": "2024-10-18T18:00:00",
             "since_text": "Since Saira's Wedding:",
             "until_text": "Saira Wedding Starts In:",
             "final_date_text": "Wedding Date",
-            "disable_after_zero": true
+            "disable_after_zero": false
         },
         {
             "id": 3,
@@ -159,8 +159,7 @@
             "until_text": "Eid Ul Adha Holiday Starts In:",
             "final_date_text": "Eid Ul Adha Holiday Date",
             "disable_after_zero": false
-        },
-
-] 
+        }
+]
 
 
