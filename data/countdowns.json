@@ -169,7 +169,19 @@
             "until_text": "Hisham Wedding Starts In:",
             "final_date_text": "Wedding Date",
             "disable_after_zero": true
-        }
+        },{
+    "id": 15,
+    "enabled": true,
+    "title": "World of Warcraft: Forever Launch",
+    "targetDate": "2026-11-05T03:00:00", 
+    "endDate": "2026-11-05T06:00:00", 
+    "since_text": "Since WoW: Forever Launch:",
+    "until_text": "WoW: Forever Launches In:",
+    "final_date_text": "WoW: Forever Launch Date",
+    "disable_after_zero": false,
+    "category": "gaming"
+}
+
 ]
 
 
