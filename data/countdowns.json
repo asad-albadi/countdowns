@@ -159,6 +159,16 @@
             "until_text": "Eid Ul Adha Holiday Starts In:",
             "final_date_text": "Eid Ul Adha Holiday Date",
             "disable_after_zero": false
+        },
+        {
+            "id": 14,
+            "enabled": true,
+            "title": "Hisham Wedding",
+            "targetDate": "2026-10-16T18:00:00",
+            "since_text": "Since Hisham's Wedding:",
+            "until_text": "Hisham Wedding Starts In:",
+            "final_date_text": "Wedding Date",
+            "disable_after_zero": true
         }
 ]
 
